@@ -1,22 +1,11 @@
-### Basic order items view file
-# This is a simple example view file.
-# More explanation is provided in BASIC_VIEW_COMPANION_README.md markdown file in this folder. Open BASIC_VIEW_COMPANION_README.md in a separate tab to view it side-by-side with this document.
-# For an overview of view files and other LookML objects, see the BASIC_LOOKML_README.md file.
-###
-
-# BUSINESS CASE: This view file correlates to the order_items table, which contains one unique row for each ecommerce order item place by a user.
-
-view: basic_order_items { # creates a view file with the name 'basic_order_items'
-  sql_table_name: `bigquery-public-data.thelook_ecommerce.order_items` ;;  # defines the table in the database that this view is based on. This table name is used in the FROM/JOIN clause that Looker will use in SQL commands to your database.
+view: basic_order_items {
+  sql_table_name: `bigquery-public-data.thelook_ecommerce.order_items` ;;
 
   ### Dimensions ###
-  # A dimension is a non-aggregate field used for grouping/slicing data. See the BASIC_VIEW_COMPANION_README.md markdown file for more info.
-  ####
-
-  dimension: id { # Creates a dimension named "id." You can name the dimension whatever you like.
-    primary_key: yes # Identifies this dimension as the primary key (a dimension with a unique value for every row)
-    type: number # Specifies the type of data in the dimension. The type affects rendering, filtering, sort order, suggestions, and more.
-    sql: ${TABLE}.id ;; # Specifies the actual SQL that is used for the field when the query runs, notice the ${} substitution operator, see the BASIC_VIEW_COMPANION_README.md for more on this.
+  dimension: id {
+    primary_key: yes
+    type: number
+    sql: ${TABLE}.id ;;
   }
 
   dimension: order_id {
@@ -52,27 +41,56 @@ view: basic_order_items { # creates a view file with the name 'basic_order_items
          END;; # using some custom SQL in our dimensions SQL definition, remember you can write any SQL your database supports here
   }
 
-  dimension_group: created_at { # dimension groups create multiple dimensions with different time granularities, in a single declaration.
+  ### Dimension Group ###
+  dimension_group: created_at {
     type: time
-    timeframes: [raw,time,date,week,month,quarter,year] # the different time grains to create dimensions for. They will be presented together in the Explore field-picker under one group label
+    timeframes: [raw,
+                time
+                ,date
+                ,week
+                ,month
+                ,quarter
+                ,year
+                ]
     sql: ${TABLE}.created_at ;;
   }
 
   dimension_group: shipped_at {
     type: time
-    timeframes: [raw,time,date,week,month,quarter,year]
+    timeframes: [raw,
+                time
+                ,date
+                ,week
+                ,month
+                ,quarter
+                ,year
+                ]
     sql: ${TABLE}.shipped_at ;;
   }
 
   dimension_group: delivered_at {
     type: time
-    timeframes: [raw,time,date,week,month,quarter,year]
+    timeframes: [raw,
+                time
+                ,date
+                ,week
+                ,month
+                ,quarter
+                ,year
+                ]
     sql: ${TABLE}.delivered_at ;;
   }
 
   dimension_group: returned_at {
     type: time
-    timeframes: [raw,time,date,week,month,quarter,year]
+    timeframes: [raw,
+                time
+                ,date
+                ,week
+                ,month
+                ,quarter
+                ,year
+                ]
     sql: ${TABLE}.returned_at ;;
   }
 
@@ -81,21 +99,17 @@ view: basic_order_items { # creates a view file with the name 'basic_order_items
     sql: ${TABLE}.sale_price ;;
   }
 
-  ####
-  # Measures
-  # Measures are fields that are aggregate calculations (e.g. sum, max, etc). Be sure to check the BASIC_VIEW_COMPANION_README.md markdown file for more info.
-  ####
+  #### Measures ####
 
-  measure: count { # creates a measure with any name we like
-    label: "# of Order Items" # overrides this measures label in Looker's front end
-    type: count # defines the aggregation type (sum, count, count_distinct, etc)
-    # Note that Count, unlike other measure types, doesn't require a SQL parameter
+  measure: count {
+    label: "# of Order Items"
+    type: count
   }
 
   measure: total_sale_price {
     type: sum
-    sql: ${sale_price} ;; # the actual SQL to be aggregated. Here sale_price will be wrapped in a SUM() function: SUM(sale_price)
-    value_format_name: usd  #apply a standard formatting in visualizations.  There are built-in value_format_names, but you can also create your own value_formats.
+    sql: ${sale_price} ;;
+    value_format_name: usd
   }
 
   measure: average_sale_price {
@@ -103,5 +117,4 @@ view: basic_order_items { # creates a view file with the name 'basic_order_items
     sql: ${sale_price} ;;
     value_format_name: usd
   }
-
 }

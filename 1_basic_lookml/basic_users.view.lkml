@@ -1,7 +1,3 @@
-### Basic users view file
-# For a description of view files, see the "basic_order_items.view" file in this same folder.
-###
-
 view: basic_users {
   sql_table_name: `bigquery-public-data.thelook_ecommerce.users`;;
 
@@ -78,7 +74,14 @@ view: basic_users {
 
   dimension_group: created_at {
     type: time
-    timeframes: [raw,time,date,week,month,quarter,year]
+    timeframes: [raw
+                ,time
+                ,date
+                ,week
+                ,month
+                ,quarter
+                ,year
+                ]
     sql: ${TABLE}.created_at ;;
   }
 
@@ -86,5 +89,4 @@ view: basic_users {
     label: "# of Users"
     type: count
   }
-
 }
