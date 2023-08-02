@@ -1,8 +1,4 @@
-### Intermediate inventory items view file
-# See the intermediate_order_items view for more thorough explanations of field-level parameters and concepts used in LookML views.
-###
-
-include: "/2_intermediate_lookml/custom_named_value_formats.lkml" # In this scenario business users requested a short number format, which was defined in this file.
+include: "/2_intermediate_lookml/custom_named_value_formats.lkml"
 
 view: intermediate_inventory_items {
   sql_table_name: `bigquery-public-data.thelook_ecommerce.inventory_items`;;
@@ -22,7 +18,12 @@ view: intermediate_inventory_items {
   dimension_group: created {
     label: "Created"
     type: time
-    timeframes: [time, date, week, month, raw]
+    timeframes: [time
+                , date
+                , week
+                , month
+                , raw
+                ]
     sql: CAST(${TABLE}.created_at AS TIMESTAMP) ;;
   }
 
@@ -35,7 +36,12 @@ view: intermediate_inventory_items {
   dimension_group: sold {
     label: "Sold"
     type: time
-    timeframes: [time, date, week, month, raw]
+    timeframes: [time
+                , date
+                , week
+                , month
+                , raw
+                ]
     sql: ${TABLE}.sold_at ;;
   }
 

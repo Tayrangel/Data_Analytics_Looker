@@ -1,8 +1,4 @@
-### Intermediate products view file
-# See the intermediate_order_items for additional explanations of similar usage for field-level parameters and concepts used in LookML views.
-###
-
-include: "/2_intermediate_lookml/custom_named_value_formats.lkml" # In this scenario, business users requested a short number format, which is defined in this file.
+include: "/2_intermediate_lookml/custom_named_value_formats.lkml"
 
 view: intermediate_products {
   sql_table_name: `bigquery-public-data.thelook_ecommerce.products`;;
@@ -72,6 +68,6 @@ view: intermediate_products {
     drill_fields: [detail*]
   }
 
-  set: detail {fields: [id,department,brand,category,name]} # The set of basic fields from this view that are used in the measure's `drill_fields` parameter.
+  set: detail {fields: [id,department,brand,category,name]}
 
 }
